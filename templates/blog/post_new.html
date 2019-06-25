@@ -1,0 +1,40 @@
+{% extends "blog_base.html" %}
+{% block title %}新增博客{% endblock %}
+
+{% block head %}
+    {{ blog_form.media }}
+{% endblock %}
+{% block blog_title %}新建博客{% endblock %}
+{% block content %}
+    <form class="pure-form pure-form-aligned" method="POST" action="{% url "post_new" %}">
+        {% if message %}
+            <div  style="color: #b92c28;font-weight: 100">{{ message }}</div>
+        {% endif %}
+        {% csrf_token %}
+        <div class="col-md-10">
+            <div class="form-group">
+                {{ blog_form.title}}
+                <br/>
+               <br/>
+                {{ blog_form.tage}}
+                <br/>
+               <br/>
+                <select id="state" class="form-control col-md-6" name="category">
+                    {% for x in posts %}
+                        <option>{{ x }}</option>
+                    {% endfor %}
+                </select>
+
+                <br/>
+                <br/>
+                {{ blog_form.content }}
+            </div>
+
+            <br/>
+
+            <div >
+                <button type="submit" id= "browser" class="btn btn-primary" >提交</button>
+            </div>
+    </form>
+
+{% endblock %}

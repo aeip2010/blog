@@ -1,0 +1,23 @@
+{% extends "base_pub.html" %}
+
+{# 1栏布局 主题内容居中展示  #}
+{% block blog_body %}
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            {#主题内容设置为变量 html代码需要转义autoescape#}
+            {# 面板新增标题 设为变量可随着内容修改#}
+            <div class="panel panel-default">
+                <div class="panel-heading">{% block blog_title %}{% endblock %}</div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        {% block content %}{% endblock %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a href="javascript:void(0);" target="_self" id="toTop" title="返回顶部" onclick="window.scrollTo(0,0);return false" style="display: block; "></a>
+    </div>
+     {% block content_js %} {% endblock %}
+{% endblock %}

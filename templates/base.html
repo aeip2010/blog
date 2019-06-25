@@ -1,0 +1,31 @@
+{% extends "base_pub.html" %}
+{# 2栏布局 左侧为主题内容 右侧为杂项  #}
+{% block blog_body %}
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-9">
+            {#主题内容设置为变量 html代码需要转义autoescape#}
+            <div class="panel panel-default">
+                <div class="panel-heading">{% block blog_title %}全部博客列表{% endblock %}</div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        {% block content %}{% endblock %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+        <div class="hidden-xs col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        {% block side %}{% endblock %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a href="javascript:void(0);" target="_self" id="toTop" title="返回顶部" onclick="window.scrollTo(0,0);return false" style="display: block; "></a>
+    </div>
+{% endblock %}

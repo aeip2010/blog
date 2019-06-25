@@ -1,0 +1,20 @@
+{% extends "blog_base.html" %}
+{% block title %}{{ name }} 搜索结果页{% endblock %}
+{% block blog_title %}【{{ name }}】发表的文章 (共{{ post_list.count }}个){% endblock %}
+{% block content %}
+    {% if name %}
+    <a href="javascript:history.go(-1);">返回上一页</a>
+{% endif %}
+<div class="posts">
+    {% for post in post_list %}
+        <section class="post">
+            <header class="post-header">
+                    <p class="post-meta">
+                     <a href="{% url "detail" id=post.id %}" style="color: #01b171">[{{ post.create_time |date:"Y-m-d H:m"}}]{{ post.title }}</a><br/>
+                    </p>
+            </header>
+        </section>
+    {% endfor %}
+
+</div><!-- /.blog-post -->
+{% endblock %}

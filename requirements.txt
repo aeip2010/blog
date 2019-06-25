@@ -1,0 +1,13 @@
+bootstrap-admin==0.4.3
+captcha==0.3
+certifi==2019.6.16
+chardet==3.0.4
+Django==2.2.2
+DjangoUeditor==1.8.143
+idna==2.8
+Pillow==6.0.0
+PyMySQL==0.9.3
+pytz==2019.1
+requests==2.22.0
+sqlparse==0.3.0
+urllib3==1.25.3

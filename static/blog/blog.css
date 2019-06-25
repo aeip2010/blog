@@ -1,0 +1,165 @@
+/* 导航栏*/
+.navbar-default{
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+.navbar-form button[type="submit"] {
+    position: absolute;
+    top: 33%;
+    right: 25px;
+    background: none;
+    border: none;
+}
+
+/* 面板*/
+.panel-default{
+    margin-left: 12px;
+    margin-right: 10px;
+}
+/* 底部通栏信息*/
+.page-bottom{
+    width: 100%;
+    clear: both;
+    background: #e7e7e7;
+    margin-top: 2.5em;
+    padding: 1em 0 0;
+    color: #777;
+}
+
+/* 博客列表*/
+.blog{
+    margin-left: 5px;
+    border-bottom: 2px solid #eee;
+}
+/* 博客详情*/
+.blog-detail{
+    margin-left: 0px;
+}
+
+/* 评论*/
+.comment-item{
+    list-style-type: none;
+    /*border-bottom: 1px solid #eee;*/
+}
+/* 评论*/
+.floor{
+   color: #5eb95e;
+    /*border-bottom: 1px solid #eee;*/
+}
+
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+/*博客 侧边栏*/
+.catListTitle{
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #5eb95e;
+    color: #fff;
+    font-weight: normal;
+    border: 1px solid #169fe6;
+}
+
+/*  h4标题的相关属性 border-bottom为底部的虚线效果 */
+h4 {
+    border-bottom: 1px #ccc solid;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+/*  h5标题的相关属性 border-bottom为底部的虚线效果 */
+h5 {
+    /*border-top: 1px #ccc solid;*/
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.home-block-title {
+    border-bottom: 1px #ccc solid;
+    padding-bottom: 10px;
+    font-weight: bold
+
+}
+/* 侧边栏分类 标签*/
+.sider-list{
+    list-style-type: none;
+    /*border-bottom: 1px solid #eee;*/
+}
+
+
+/*.widget{*/
+/*clear: both;*/
+/*position: relative;*/
+/*margin-bottom: 10px;*/
+/*background-color: #fff;*/
+/*border-radius: 4px;*/
+/*border: 1px solid #eaeaea;*/
+/*overflow: hidden;*/
+/*}*/
+
+
+/* 文章时间*/
+.post-time{
+    /*background: #d3eda3;*/
+    /*color:#3b8bba;*/
+}
+
+/* 文章标签*/
+.post-tag{
+    /*background: #fcebbd;*/
+    /*color: rgb(128, 88, 165);*/
+}
+/* 文章分类*/
+.post-category{
+    /*background: #e1f2fa;*/
+    /*color: #5992aa;*/
+}
+/* 文章作者*/
+.post-author{
+    /*background: #f57b00;*/
+    /*color: #ff3860;*/
+}
+/* 文章阅读数*/
+.post-view{
+    /*background: #008ed4;*/
+    /*color: #f57b00;*/
+}
+/* IP地址*/
+.post-ip{
+    /*background: #ddaeff;*/
+    /*color: #8156a7;*/
+}
+
+/* foot 底部通栏*/
+.page-bottom {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.modal-vertical-centered {
+         display: flex;
+         align-items: center;
+     }
+
+/* 时间线*/
+.year{
+    /*border: 1px solid #e4e8ee;*/
+    background-color: #fff;
+    font-size: 14px;
+}
+
+/* 博客汇总*/
+.archives{
+    border: 1px solid #e4e8ee;
+    background-color: #fff;
+    font-size: 14px;
+}

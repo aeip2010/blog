@@ -1,0 +1,36 @@
+{% extends "base_pub.html" %}
+{# 1栏布局 主题内容居中展示  #}
+{% block blog_body %}
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-9 col-lg-offset-1">
+            {#主题内容设置为变量 html代码需要转义autoescape#}
+            {# 面板新增标题 设为变量可随着内容修改#}
+            <div class="panel panel-default">
+                <div class="panel-heading">{% block blog_title %}博客列表{% endblock %}</div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        {% block content %}{% endblock %}
+
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a href="javascript:void(0);" target="_self" id="toTop" title="返回顶部" onclick="window.scrollTo(0,0);return false" style="display: block; "></a>
+    </div>
+    <div class="modal fade modal-vertical-centered" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title" id="myModalLabel">
+                    休息小贴士
+                </h2>
+            </div>
+            <div class="modal-body">已持续盯着屏幕10分钟了，请离开此页面休息一下下！</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+{% endblock %}

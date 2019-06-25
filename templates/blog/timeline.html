@@ -1,0 +1,124 @@
+{% extends "test_base.html" %}
+{% block title %}博客-时间线{% endblock %}
+
+
+{% block blog_title %}
+    <div id="title">
+    全部大事件 (共{{ all_timeline.count }}件)
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="column">
+        <div class="table-responsive">
+            <div align="right">
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">新事件</button>
+            </div>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
+                <form class='form-taskcreate' action="{% url "timeline" %}" method="post">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h2 class="modal-title" id="myModalLabel">
+                                    时间线
+                                </h2>
+                            </div>
+                            <div class="modal-body">
+                                {% csrf_token %}
+                                <h3 class="alert alert-info">时间滴答，那些重要的时日我都在做些什么呢？</h3>
+                                <label for="name">内容</label>
+                                <textarea class="form-control"  rows="3" name="content" placeholder="说出你的碎碎念" required ></textarea>
+                                <label for="name">城市</label>
+                                <select class="form-control" name="city" >
+                                    {% for cit in citys %}
+                                        <option>{{ cit }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <label>事件时间：</label>
+                                <div class='input-group date' id='datetimepicker' aria-placeholder="jj">
+                                    <input type='text' class="form-control" name="timer">
+                                    <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                </div>
+                                <label for="name">地标</label>
+                                <select class="form-control" name="landmark" >
+                                    {% for land in landmarks %}
+                                        <option>{{ land}}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <label for="name">类型</label>
+                                <select  class="form-control" name="time_type">
+                                    <option>衣</option>
+                                    <option>食</option>
+                                    <option>住</option>
+                                    <option>行</option>
+                                    <option>职</option>
+                                    <option>亲</option>
+                                </select>
+                                <label for="name">关键字</label>
+                                <input type="text" name="keyword" class="form-control" placeholder="地标关键字" minlength="2">
+                                <br/>
+
+                                <br/>
+                                <button type="reset" class="btn btn-default pull-left">重置</button>
+                                <button type="submit" id= "browser" class="btn btn-primary pull-right">提交</button>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div>
+        <form class="form-group" action="/timesearch/" method="get" style="margin: auto 0;">
+            <input type="text" id="search-text1" name="q" class="form-control col-sm-3">
+            <button type="button"  class="btn btn-primary" id='search-button'>搜索</button>
+        </form>
+
+        <hr class="the-line"  />
+        <div id="timeline_type" class="year" >
+            {% for year in years %}
+                <div class="year">
+                    <h1 >{{ year }}年</h1>  {# 标题样式#}
+                    <div style="padding: 0px 100px; background-color: #fff;">
+                        <table class="table table-hover">  {# 表格样式#}
+                            <thead>
+                            <tr class="form-list-font">
+                                <th>时间</th>
+                                {#                                    <th>编号</th>#}
+                                <th>内容</th>
+                                <th>地标</th>
+                                <th>地点</th>
+                                <th>关键字</th>
+                                <th>类型</th>
+
+                            </tr>
+                            </thead>
+                            {% for post in all_timeline %}
+                                {% ifequal year post.year  %}
+                                    <tbody>
+                                    <tr class="form-list-font">
+                                        <td>{{ post.linetime|date:"Y-m"}}</td>
+                                        {#                                            <td>{{ post.id}}</td>#}
+                                        <td >{{ post.content}}</td>
+                                        <td>{{ post.landmark}}</td>
+                                        <td>{{ post.city}}</td>
+                                        <td>{{ post.keyword}}</td>
+                                        <td>{{ post.type}}</td>
+
+                                    </tr>
+                                    </tbody>
+                                {% endifequal %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,248 @@
+<!--home.html-->
+{% extends "base.html" %}
+{% block title %}博客首页{% endblock %}
+{#<marquee behavior="scroll"  width="900" hspace="200" direction="up" scrollamount="3" onmouseover=stop() onmouseout=start()>#}
+{% block blog_title %}全部博客列表 (共{{ posts.count }}篇文章){% endblock %}
+{% block content %}
+    <div class="filter blog-border">
+        <div class="filter-item">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    发布日期 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('date','-1');" name="date">
+                        发布日期从近到远
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('date','1');" name="date">
+                        发布日期从远到近
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    阅读数 <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('view','-1');" name="view">
+                        阅读数由多到少
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('view','1');" name="view">
+                        阅读数由少到多
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    评论数 <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('comment','-1');" name="comment">
+                        评论数由多到少
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('comment','1');" name="comment">
+                        评论数由少到多
+                    </a></li>
+                </ul>
+            </div>
+
+            <span style="padding-left:1em; white-space:nowrap;">
+                排序：<span id="sort_content">发布日期从近到远</span>
+            </span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="tag-list">
+            <form id="filter_form" method="GET" action="/blog/">
+                <!--排序类型-->
+                <input type="hidden" name="sf" id="sort_sf" value="date">
+                <!--排序方式-->
+                <input type="hidden" name="st" id="sort_st" value="-1">
+                <input type="hidden" name="wd" id="keywords" value="">
+                <ul>
+                    <li class="tag-recommend">
+                        <input id="recommend" type="checkbox" name="recommend" value="true">
+                        <label for="recommend">推荐</label>
+                    </li>
+
+                    <li class="tag-recommend">
+                        <input id="check_all" type="checkbox" name="check_all" value="true">
+                        <label for="check_all">全部类别&nbsp;(194)</label>
+                    </li>
+
+
+                    <li>
+                        <input id="tag_1" type="checkbox" name="tag" value="1">
+                        <label for="tag_1">我的网站搭建&nbsp;(56)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_6" type="checkbox" name="tag" value="6">
+                        <label for="tag_6">Python&nbsp;(31)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_8" type="checkbox" name="tag" value="8">
+                        <label for="tag_8">Django&nbsp;(28)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_2" type="checkbox" name="tag" value="2" checked="">
+                        <label for="tag_2">Excel&nbsp;(18)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_10" type="checkbox" name="tag" value="10">
+                        <label for="tag_10">VSTO&nbsp;(15)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_3" type="checkbox" name="tag" value="3">
+                        <label for="tag_3">数据库&nbsp;(13)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_12" type="checkbox" name="tag" value="12">
+                        <label for="tag_12">机器学习&nbsp;(11)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_4" type="checkbox" name="tag" value="4">
+                        <label for="tag_4">vb/vba&nbsp;(8)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_9" type="checkbox" name="tag" value="9">
+                        <label for="tag_9">Linux&amp;服务器&nbsp;(7)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_7" type="checkbox" name="tag" value="7">
+                        <label for="tag_7">硬件&nbsp;(5)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_11" type="checkbox" name="tag" value="11">
+                        <label for="tag_11">Web前端&nbsp;(5)</label>
+                    </li>
+
+                    <li>
+                        <input id="tag_5" type="checkbox" name="tag" value="5">
+                        <label for="tag_5">C#&nbsp;(3)</label>
+                    </li>
+
+
+
+                    <li><a class="btn btn-success btn-xs" href="/blog/">清除条件</a></li>
+
+                </ul>
+            </form>
+        </div>
+
+
+    </div>
+    {% for post in blogs %}
+        <div class="blog">
+            <div class="blog-header">
+                <h2 class="blog-title"><a href="{% url "detail" id=post.id %}">{{ post.title }}</a>
+                    {#                    #}
+                    <img width="48" height="48" alt="Eric Ferraiuolo's avatar" class="post-avatar" src="https://purecss.io/img/common/reid-avatar.png" id="yui_3_18_1_1_1554361542118_10">
+                </h2>
+                <p class="post-meta">
+                    <span class="glyphicon glyphicon-time "></span> {{ post.update_time |date:"Y-m-d H:i:s"}}
+                    <span class="glyphicon glyphicon-tags">：</span><a class="post-category1 " href="{% url "search_type" type=post.category.name  %}">{{ post.category.name  }}</a>
+                    <span class="glyphicon glyphicon-tag">：</span><a class="post-tag1 " href="{% url "search_tag" tag=post.tage %}">{{ post.tage }}</a>
+                    <span class="glyphicon glyphicon-user">： </span><a class="post-author1 " href="{% url "search_name" name=post.author %}">{{ post.author }}</a>
+                    <span class="glyphicon glyphicon-eye-open">：</span> {{ post.views}}
+                </p>
+            </div>
+
+            <div class="blog-description">
+                <p>
+                    {#                        {{ post.content }}#}
+                    {#                        #将正文截断设置为100#}
+                    {{ post.content|truncatewords_html:30}}
+                </p>
+            </div>
+            <a class="blog-button" href="{% url "detail" id=post.id %}">Read More >>> </a>
+            {#        #}
+        </div>
+    {% endfor %}
+    {#     #分页部分 #}
+    <div >
+        {#                <span class="blog_footer_tip">#}
+        {#                    共{{pages.count}}篇博文。当前第{{blogs.number}}页，共{{pages.num_pages}}页#}
+        {#                </span><br/>#}
+
+        <ul class="pagination">
+            {#     上一页，这里需要用到has_previous方法判断是否有上一页 #}
+            <li>
+                <a href="?page=
+                            {% if blogs.has_previous %}
+                                {{blogs.previous_page_number}}
+                            {% else %}
+                                {{blogs.number}}
+                            {% endif %}
+                        " aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {#     遍历所有页码 #}
+            {% for page in pages.page_range %}
+                <li><a href="?page={{page}}">{{page}}</a></li>
+            {% endfor %}
+
+            {#     下一页，这里需要用到has_next方法判断是否有下一页 #}
+            <li>
+                <a href="?page=
+                            {% if blogs.has_next %}
+                                {{blogs.next_page_number}}
+                            {% else %}
+                                {{blogs.number}}
+                            {% endif %}
+                        " aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% block extra_footer %}
+        {#    设置凸显当前的页码#}
+        <script type="text/javascript">
+            $(".pagination li:eq({{blogs.number}})").addClass("active");
+        </script>
+    {% endblock %}
+{% endblock %}
+
+{% block side %}
+    <div class="sider-list">
+    <div  clas="widget">
+        <h2 class="catListTitle">分类</h2>
+        {% for key, value in info_dict.items %}
+            <li><a class="post-category1" href="{% url "search_type" type=key %}">{{ key }}<span class="badge pull-left" style="color: #6ce26c">{{ value }}</span></a></li>
+        {% endfor %}
+    </div>
+    <div  clas="widget">
+        <h2 class="catListTitle">阅读排行</h2>
+        {% for type in blog_view %}
+            <li role="presentation" class="active"><a  class="post-author1" href="{% url "detail" id=type.id %}">{{ type.title}}<span class="badge">{{ type.views }}次</span></a></li>
+            {#            #}
+        {% endfor %}
+    </div>
+    <div  clas="widget">
+        <h2 class="catListTitle">标签云</h2>
+        {% for key,value  in tags.items %}
+            <a class="post-tag1" href="{% url "search_tag" tag=key %}">{{ key }}<span class="badge">{{ value }}°</span></a>
+        {% endfor %}
+    </div>
+    <div  clas="widget">
+        <h2 class="catListTitle">站点统计</h2>
+        <p>文章总:{{ tongji_blog }} |  微博总:{{ tongji_weibo }} | 大事件总:{{ tongji_timeline }}</p>
+        <p>用户总:{{ tongji_user }} |  导航链总:{{ tongji_site }} |标签总:{{ tongji_tag }} | 评论总:{{ tongji_comment }}</p>
+    </div>
+{% endblock %}
+

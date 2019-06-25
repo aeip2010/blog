@@ -1,0 +1,52 @@
+{% extends "blog_base.html" %}
+{% block title %} {{ keyword }}大事件归档{% endblock %}
+{% block blog_title %}【{{ keyword }}】搜索结果 (共{{ post_list.count }})个{% endblock %}
+
+{% block content %}
+    <div class="posts">
+        {% if error %}
+            <a href="javascript:history.go(-1);">返回上一页</a>
+            <h2 class="post-title">没有相关大事件</h2>
+            <div align="right">
+                <a class="pure-button pure-button-primary"   href="{% url 'timeline' %}">创建新事件</a>
+            </div>
+
+        {% else %}
+            <div class="year">
+                <a href="javascript:history.go(-1);">返回上一页</a>
+                {#                            <h1 >大事件结果展示：{{ keyword }}</h1>  {# 标题样式#}
+                <div style="padding: 0px 100px;">
+                    <table class="table table-hover">  {# 表格样式#}
+                        <thead>
+                        <tr class="form-list-font">
+                            <th>时间</th>
+                            {#                                    <th>编号</th>#}
+                            <th>内容</th>
+                            <th>地标</th>
+                            <th>地点</th>
+                            <th>关键字</th>
+                            <th>类型</th>
+
+                        </tr>
+                        </thead>
+                        {% for post in post_list %}
+                            <tbody>
+                            <tr class="form-list-font">
+                                <td>{{ post.linetime|date:"Y-m"}}</td>
+                                {#                                            <td>{{ post.id}}</td>#}
+                                <td>{{ post.content}}</td>
+                                <td>{{ post.landmark}}</td>
+                                <td>{{ post.city}}</td>
+                                <td>{{ post.keyword}}</td>
+                                <td>{{ post.type}}</td>
+
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+{% endblock %}

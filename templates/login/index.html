@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}主页{% endblock %}
+
+{% block content %}
+    <body>
+    {% if request.session.is_login %}
+         <div style="padding: 0px 10px;">
+
+          <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+        </div>
+        {% csrf_token %}
+    {% else %}
+        <h1>请<a href="/login/">登录</a>查看信息</h1>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'test_base.html' %}
+{% block title %}测试工作台{% endblock %}
+
+
+{% block content %}
+    <body>
+    {% if request.session.is_login %}
+        <div style="padding: 0px 10px;">
+
+            <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+        </div>
+        {% csrf_token %}
+        <div class="containe">
+
+            <div class="row clearfix">
+
+                <div class="col-md-8 column" style="padding: 0px 30px;">
+                    <h2>测试工作台清单</h2>
+                    <table class="table table-bordered table-hover"    >  {# 表格样式#}
+                        <tr class="form-list-font"  >
+                            <td class="danger"><strong>编号</strong></td>  {# 单元格状态样式#}
+                            <td class="danger"><strong>类型</strong></td>
+                            <td class="danger"><strong>内容</strong></td>
+                            <td class="danger"><strong>创建时间</strong></td>
+                        </tr>
+
+                        {% for row in rows1 %}
+                            <tr class="form-list">
+                                <td class="danger">{{ row.id}}</td>
+                                <td class="danger">{{ row.task}}</td>
+                                <td class="danger">{{ row.content}}</td>
+                                <td class="danger">{{ row.c_time}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+
+                <div class="col-md-4 column">
+                    <h2>测试工作台</h2>
+                    <div class="alert alert-info">
+                        <p>目标是把测试小伙伴平时奋斗的成果展示出来，测试同学参与了哪些项目，项目的提测质量、测试质量、相关报告及风险点；<br/>
+
+                            我们可以先关注这些平台中的项目质量报告，项目日报，项目提测质量，测试质量等内容的补充；<br/>
+                            项目上线之后可以做定期的总结及复盘，对线上反馈问题进行总结，确认是用例场景考虑不全，还是测试范围评估不准确，还是环境需要完善等等，总结才能有进步。</p>
+                    </div>
+                    <form class='form-taskcreate' action="{% url "test_bench" %}" method="post">
+                        {% csrf_token %}
+                        {% if message %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                        <textarea class="form-control" rows="8" name="content" placeholder="字数不得少于5个">
+[测试报告]
+流程控制 ：
+进度控制：
+风险识别：
+测试用例：
+                        </textarea>
+                        <br/>
+                        <select class="form-control" name="tasktype" >
+                            <option>漏测大全</option>
+                            <option>线上反馈</option>
+                            <option>成果展示</option>
+                            <option>测试报告</option>
+
+                        </select>
+                        <br/>
+                        <label>计划完成时间：</label>
+                        <div class='input-group date' id='datetimepicker'>
+                            <input type='text' class="form-control" name="timer" placeholder="截止时间">
+                            <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-lg active center-block" >提交</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1>请<a href="/login/">登录</a>查看信息</h1>
+
+    {% endif %}
+{% endblock %}

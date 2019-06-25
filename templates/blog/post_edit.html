@@ -1,0 +1,43 @@
+{% extends "blog_base.html" %}
+{% block title %}{{ post_title}}---编辑{% endblock %}
+{% block head %}
+    {{ blog_form.media }}
+{% endblock %}
+
+{% block content %}
+    <form class="pure-form pure-form-aligned" method="POST" action="{% url "post_edit"  postid=post_id %}">
+        {% if message %}
+            <div  style="color: #b92c28;font-weight: 100">{{ message }}</div>
+        {% endif %}
+        {% csrf_token %}
+        <div class="col-md-10">
+            <a href="javascript:history.go(-1);">返回上一页</a>
+            <div class="form-group">
+                {{ blog_form.title}}
+                <br/>
+                <br/>
+                {{ blog_form.tage}}
+                <br/>
+                <br/>
+
+                <select id="state" class="form-control col-md-6" name="category">
+                    {% for x in posts %}
+                        {% ifequal x.name post_type %}
+                            <option selected="selected">{{ x.name }}</option>
+                        {% endifequal %}
+                        <option>{{ x.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <br/>
+                <br/>
+                {{ blog_form.content }}
+            </div>
+
+            <br/>
+
+            <div >
+                <button id= "browser_post_edit" type="submit" class="btn btn-primary" >提交</button>
+            </div>
+    </form>
+{% endblock %}

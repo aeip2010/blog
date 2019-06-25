@@ -1,0 +1,10 @@
+{% extends 'test_base.html' %}
+{% block title %}测试日报确认{% endblock %}
+{% block content %}
+    <div class="row">
+        <h1 class="text-center" style="padding: 0px 100px;">{{ message }}</h1>
+    </div>
+    <script>
+        window.setTimeout("window.location='/dailylist/'",2000);
+    </script>
+{% endblock %}

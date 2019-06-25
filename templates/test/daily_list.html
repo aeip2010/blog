@@ -1,0 +1,141 @@
+{% extends 'test_base.html' %}
+{#{% load staticfiles %}#}
+{% block title %}六点工作制{% endblock %}
+{#{% block css %}<link href="{% static 'css/list.css' %}" rel="stylesheet"/>{% endblock %}#}
+
+{% block head %}
+    <!--引入css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
+    <!--引入JavaScript-->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+    {% if request.session.is_login %}
+        <div style="padding: 0px 10px;">
+
+            <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+            <div>
+                <p>【总条目】{{ rows.count }}条，已完成{{ rows_done.count }}条，激活状态{{ rows_on.count }}条，完成率{{ done_rate }}</p>
+                <p>【本周】xx条，完成率xx% </p>
+
+            </div>
+        </div>
+
+    {% else %}
+        <h1>你尚未登录，只能访问公开内容！</h1>
+    {% endif %}
+
+    <div align="right">
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">创建当天的工作</button>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
+        <form class='form-dailycreate' action="{% url "daily_list" %}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h2 class="modal-title" id="myModalLabel">
+                            测试日报
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {{ dailycreate_form }}
+                        <br/>
+                        <button type="reset" class="btn btn-default pull-left">重置</button>
+                        <button type="submit" class="btn btn-primary pull-right">提交</button>
+                    </div>
+                    <div class="modal-footer">
+                        {#                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>#}
+                        {#                                        <button type="submit" class="btn btn-primary btn-lg active center-block">提交</button>#}
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div><!-- /.modal-content -->
+    </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table id="example"  class="table  table-hover table-striped"  cellspacing="0" width="100%" style="padding: 0px 10px;">
+                <thead>
+                <tr>
+                    <td class="danger" >No</td>  {# 单元格状态样式#}
+                    <td class="danger" >One</td>
+                    <td class="danger" >Two</td>
+                    <td class="danger" >Three</td>
+                    <td class="success">Four</td>
+                    {#                    <td class="warning">Five</td>#}
+                    {#                    <td class="success">Six</td>#}
+                    <td class="warning">Creater</td>
+                    {#                    <td class="active">CreateTime</td>#}
+                    <td class="active">Result</td>>
+                    <td class="active">Action</td>>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for row in rows %}
+                    <tr class="form-list">
+                        <td class="danger" >{{ row.id}}</td>
+                        <td class="danger" style="width: 20%; ">{{ row.task_1}}</td>
+                        <td class="danger" style="width: 20%; ">{{ row.task_2}}</td>
+                        <td class="danger" style="width: 20%; ">{{ row.task_3}}</td>
+                        <td class="success"  >{{ row.task_4}}</td>
+                        {#                        <td class="warning">{{ row.task_5}}</td>#}
+                        {#                        <td class="success">{{ row.task_6}}</td>#}
+                        {#                        <td class="warning">{{ row.createuser}}</td>#}
+                        <td class="active">{{ row.c_time|date:"Y-m-d"}}</td>
+                        {% if row.has_confirmed %}
+                            <td class="warning" ><strong style="color:green">完成</strong></td>
+                            <td class="active"></td>
+                        {% else %}
+                            <td class="warning">
+                                <strong style="color: #b92c28">激活</strong>
+                            </td>
+                            <form class="form-group" action="/update/" method="post" style="margin: auto 0;">
+                                <input name="q" type="hidden" id="js-name" value="{{ row.id }}">
+                                <td class="active"><button class="btn btn-primary btn-lg" id="btn2">更新</button></td>
+                            </form>
+
+                        {% endif %}
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!--初始化代码-->
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                stateSave: true,
+                "paging":   true,
+                "ordering": true,
+                "info":     true,
+                "order": [[ 0, "desc" ]],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25,50, "All"]]
+            });
+        });
+    </script>
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            $("#btn2").click(function () {#}
+{#                $.post("/update/", {'q': q}, function (data) {#}
+{#                    console.log(data);#}
+{#                });#}
+{#            });#}
+{#    </script>#}
+
+{% endblock %}

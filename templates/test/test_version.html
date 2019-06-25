@@ -1,0 +1,89 @@
+{% extends "test_base.html" %}
+{% block title %}{{ name }} 搜索结果页{% endblock %}
+{% block blog_title %}【{{ name }}】发表的文章 (共{{ post_list.count }}个){% endblock %}
+{% block content %}
+
+    <h3 align="center">项目版本信息</h3>
+    {% if name %}
+        <a href="javascript:history.go(-1);">返回上一页</a>
+    {% endif %}
+    <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">查询条件</div>
+            <div class="panel-body">
+                <div class="form-group" style="margin-top: 15px">
+                    <label class="control-label col-sm-1" for="txt_search_project">项目名称:</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="search_project" onchange="searchproject()">
+                            <option value="99">全部项目/未知项目</option>
+                            <option value="100">测试项目</option>
+                            <option value="101">演示项目(管理员演示用)</option>
+                        </select>
+                    </div>
+
+                    <label class="control-label" for="txt_search_date" style="float: left;">上线日期:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="input-group date form_date col-md-3" id="datepicker" style="float: left;">
+                        <input type="text" class="form-control" name="start" id="datetimepicker" readonly="">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <span class="input-group-addon">至</span>
+                        <input type="text" class="form-control" name="end" id="datetimepicker" readonly="">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bootstrap-table"><div class="fixed-table-toolbar"><div class="bs-bars pull-left"><div id="toolbar" class="btn-group">
+            <button id="btn_addplan" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;新增计划
+            </button>
+            <button id="btn_addversion" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;新增版本
+            </button>
+        </div>
+        </div>
+            <div class="columns columns-right btn-group pull-right">
+                <button class="btn btn-default" type="button" name="refresh" aria-label="refresh" title="刷新"><i class="glyphicon glyphicon-refresh icon-refresh"></i></button></div>
+            <div class="pull-right search"><input class="form-control" type="text" placeholder="搜索">
+            </div></div>
+
+
+            <div class="fixed-table-container" style="height: 386px; padding-bottom: 40px;">
+                <div class="fixed-table-body">
+                    <div class="fixed-table-loading" style="top: 41px; display: none;">正在努力地加载数据中，请稍候……</div>
+                    <table id="tb_projectversion" class="table table-hover table-striped" style="margin-top: -40px;">
+                        <thead><tr><th style="width: 15%; " data-field="sectorProjects.projectname">
+                            <div class="th-inner ">项目名称</div><div class="fht-cell"></div></th><th style="width: 8%; " data-field="versiontype">
+                            <div class="th-inner ">版本状态</div><div class="fht-cell"></div></th><th style="width: 10%; " data-field="versionnumber">
+                            <div class="th-inner ">版本号</div><div class="fht-cell"></div></th><th style="width: 7%; " data-field="actually_launchdate"><div class="th-inner ">版本达成日期</div>
+                            <div class="fht-cell"></div></th><th style="width: 10%; " data-field="protime_deviation">
+                            <div class="th-inner ">项目进度偏差</div><div class="fht-cell"></div></th><th style="width: 7%; " data-field="plan_demand"><div class="th-inner ">需求达成率</div>
+                            <div class="fht-cell"></div></th><th style="width: 33%; " data-field="imprint"><div class="th-inner ">版本说明</div>
+                            <div class="fht-cell"></div></th><th style="text-align: center; width: 10%; " data-field="id"><div class="th-inner ">操作</div>
+                            <div class="fht-cell"></div></th></tr></thead>
+                        <tbody>
+                        <tr data-index="0">
+                            <td style="width: 15%; ">测试项目</td>
+                            <td style="width: 8%; "><font style="color:#00DB00">已完成</font></td>
+                            <td style="width: 10%; ">1.2.0</td> <td style="width: 7%; ">2018-09-18</td>
+                            <td style="width: 10%; ">-133.33%</td> <td style="width: 7%; ">116.67%</td>
+                            <td style="width: 33%; ">挂号费黄金分割回答单个</td>
+                            <td style="text-align: center; width: 10%; "><a href="#" mce_href="#" onclick="edit('0','2')">编辑</a> <a href="#" mce_href="#" onclick="del('0','2')">删除</a> <a href="#" mce_href="#" onclick="show('0','2')">详情</a> <a href="#" mce_href="#" onclick="zdlist('0','2')">禅道</a></td>
+                        </tr>
+                        </tbody>
+                    </table></div>
+                <div class="fixed-table-footer" style="display: none;"><table><tbody><tr></tr>
+                </tbody></table></div><div class="fixed-table-pagination" style="display: block;">
+                <div class="pull-left pagination-detail"><span class="pagination-info">显示第 1 到第 1 条记录，总共 1 条记录</span><span class="page-list" style="display: none;">每页显示 <span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">10</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem" class="active"><a href="#">10</a></li></ul></span> 条记录</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-number active"><a href="#">1</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div></div></div><div class="clearfix"></div>
+
+    </div>
+
+    </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+    </div>
+
+    </div>
+{% endblock %}

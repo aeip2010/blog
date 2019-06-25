@@ -1,0 +1,30 @@
+{% extends 'blog_base.html' %}
+{% block title %}{{post_title }} --站点导航{% endblock %}
+{% block blog_title %}[{{ post_type }}]分类 {{post_title }} {% endblock %}
+{% block content %}
+
+    <form  action="{% url "site_edit" siteid=post_id %}" method="post">
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+        <a href="javascript:history.go(-1);">返回上一页</a>
+        {% csrf_token %}
+        <h3>站点类型 </h3>
+        <select class="form-control" name="sitetype" >
+            {% for type in sitetypes %}
+                {% ifequal type.name post_type %}
+                    <option selected="selected">{{ type.name }}</option>
+                {% endifequal %}
+                <option>{{ type.name }}</option>
+            {% endfor %}
+        </select>
+        {{ sitecreate_form }}
+        <br/>
+
+        <div class="form-groupr">
+            <button type="reset" class="btn btn-default pull-left">重置</button>
+            <button type="submit" class="btn btn-primary pull-right">提交</button>
+        </div>
+
+    </form>
+{% endblock %}

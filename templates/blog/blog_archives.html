@@ -1,0 +1,52 @@
+{% extends "blog_base.html" %}
+{% block title %}博客-归档{% endblock %}
+{% block blog_title %}全部博客 (共{{ post_list.count }}篇) {% endblock %}
+
+
+{% block content %}
+    <div class="posts">
+        {% for year in years %}
+            <div class="year">
+                <h1 style="color: #00a0e9">{{ year }}年</h1>
+                {% for month in months %}
+                    <div class="archives" >
+                        <h5>{{ month }}月</h5>
+                        {% for post in post_list %}
+                            {% ifequal year  post.create_time|date:"Y"  %}
+                                {% ifequal month  post.create_time|date:"n"  %}
+                                    <section class="post" style="padding-left: 100px">
+                                        <header class="post-header">
+                                            <p class="post-meta">
+                                                <a href="{% url "detail" id=post.id %}" style="color: #01b171">[{{ post.create_time |date:"Y-m-d H:m"}}]{{ post.title }}
+                                                    {% for key,value  in comment_list.items %}
+                                                        {% ifequal key post.id %}
+                                                            <span class="badge">评论{{ value }}°</span>
+                                                        {% endifequal %}
+                                                    {% endfor %}
+                                                </a><br/>
+                                            </p>
+                                        </header>
+                                    </section>
+                                {% endifequal %}
+                            {% endifequal %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+        {% endfor %}
+
+        {#        {% for post in post_list %}#}
+        {#            <section class="post">#}
+        {#                <header class="post-header">#}
+        {#                    <p class="post-meta">#}
+        {#                        <a href="{% url "detail" id=post.id %}" style="color: #01b171">[{{ post.create_time |date:"Y-m-d H:m"}}]{{ post.title }}</a><br/>#}
+        {#                    </p>#}
+        {#                </header>#}
+        {#            </section>#}
+        {#           {% endifequal %}#}
+        {#        {% endfor %}#}
+    </div><!-- /.blog-post -->
+{% endblock %}
