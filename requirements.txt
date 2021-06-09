@@ -2,7 +2,7 @@ bootstrap-admin==0.4.3
 captcha==0.3
 certifi==2019.6.16
 chardet==3.0.4
-Django==2.2.2
+Django==2.2.22
 DjangoUeditor==1.8.143
 idna==2.8
 Pillow==6.0.0
